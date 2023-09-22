@@ -24,7 +24,7 @@
 
 using namespace std;
 
-const int INF = 1e9;
+const int INF = numeric_limits<int>::max();
 
 void dijkstra(vector<vector<int>>& graph, int source) {
     int V = graph.size();
@@ -35,7 +35,6 @@ void dijkstra(vector<vector<int>>& graph, int source) {
 
     int count = 0;
     while (count < V - 1) {
-      
         int u = -1;
         for (int i = 0; i < V; ++i) {
             if (!visited[i] && (u == -1 || dist[i] < dist[u])) {
