@@ -20,10 +20,11 @@
 
 #include <iostream>
 #include <vector>
+#include <limits>
 
 using namespace std;
 
-const int INF = 1e9; // A large integer to represent infinity
+const int INF = 1e9;
 
 void dijkstra(vector<vector<int>>& graph, int source) {
     int V = graph.size();
@@ -32,7 +33,9 @@ void dijkstra(vector<vector<int>>& graph, int source) {
 
     dist[source] = 0;
 
-    while (true) {
+    int count = 0;
+    while (count < V - 1) {
+      
         int u = -1;
         for (int i = 0; i < V; ++i) {
             if (!visited[i] && (u == -1 || dist[i] < dist[u])) {
@@ -40,26 +43,22 @@ void dijkstra(vector<vector<int>>& graph, int source) {
             }
         }
 
-        if (u == -1 || dist[u] == INF) {
-            break; // All remaining vertices are unreachable.
-        }
-
         visited[u] = true;
 
-        for (int v = 0; v < V; ++v) {
+        int v = 0;
+        while (v < V) {
             if (!visited[v] && graph[u][v] && dist[u] != INF && dist[u] + graph[u][v] < dist[v]) {
                 dist[v] = dist[u] + graph[u][v];
             }
+            v++;
         }
+
+        count++;
     }
 
     cout << "Shortest distances from vertex " << source << ":\n";
     for (int i = 0; i < V; ++i) {
-        if (dist[i] == INF) {
-            cout << "Vertex " << i << ": Infinity" << endl;
-        } else {
-            cout << "Vertex " << i << ": " << dist[i] << endl;
-        }
+        cout << "Vertex " << i << ": " << dist[i] << endl;
     }
 }
 
