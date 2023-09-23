@@ -42,26 +42,26 @@ void merge(vector<int> &arr,int l , int mid, int r){
 
 void mergersort(vector<int> &arr, int  l , int r){
       
-  if(l<r){
-    
-    int mid = l+(r-l)/2;
-    
-    mergersort(arr,l,mid);
-    mergersort(arr,mid+1,r);
-    
-    merge(arr,l,mid,r);
-  }
+	if(l<r){
+	
+		int mid = l+(r-l)/2;
+		
+		mergersort(arr,l,mid);
+		mergersort(arr,mid+1,r);
+		
+		merge(arr,l,mid,r);
+	}
 }
 
 int main() 
 {
-    vector<int> ar = {8,7,6,4,5};
-    
-    mergersort(ar,0,ar.size()-1);
+	vector<int> ar = {8,7,6,4,5};
+	
+	mergersort(ar,0,ar.size()-1);
 	  
-    for(int i : ar){
-      cout<<i<<" ";
-    }
+	for(int i : ar){
+		cout<<i<<" ";
+	}
 	  
-    return 0;
+	return 0;
 }
