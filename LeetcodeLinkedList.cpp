@@ -1,3 +1,6 @@
+#include <iostream>
+using namespace std;
+
 class node {
   public:
       int val;
@@ -117,4 +120,27 @@ class MyLinkedList {
   
           head = prev;
       }
+      
+      void printList() {
+        node* current = head;
+        while (current) {
+            cout << current->val << " -> ";
+            current = current->next;
+        }
+        cout << "nullptr" << std::endl;
+      }
 };
+
+int main(){
+  MyLinkedList m;
+  m.addAtHead(4);
+  m.addAtHead(1);
+  m.addAtHead(7);
+  m.addAtTail(99);
+  m.addAtIndex(3,0);
+  m.printList();
+  m.reverse();
+  m.deleteAtIndex(2);
+  m.deleteAtHead();
+  m.printList();
+}
