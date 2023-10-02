@@ -1,25 +1,6 @@
-/*
-  function Dijkstra(Graph, source):
-    initialize distance[source] = 0 and distance[other vertices] = infinity
-    initialize visited[all vertices] = false
-    
-    while there are unvisited vertices:
-        current = vertex with the smallest distance among unvisited vertices
-        
-        for each neighbor of current:
-            if neighbor is unvisited:
-                calculate tentative distance to neighbor
-                if tentative distance is less than distance[neighbor]:
-                    update distance[neighbor]
-        
-        mark current as visited
-    
-    return distance[]  // Shortest distances from source to all vertices
-*/
-
 
 #include <iostream>
-#include <vector>
+#include <bits/stdc++.h>
 #include <limits>
 
 using namespace std;
@@ -35,9 +16,11 @@ void dijkstra(vector<vector<int>>& graph, int source) {
 
     int count = 0;
     while (count < V - 1) {
-        int u = -1;
+        int u;
+        int min = INT_MAX;
         for (int i = 0; i < V; ++i) {
-            if (!visited[i] && (u == -1 || dist[i] < dist[u])) {
+            if (!visited[i] && (dist[i]<=min)) {
+                min = dist[i];
                 u = i;
             }
         }
