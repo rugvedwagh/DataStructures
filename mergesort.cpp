@@ -1,84 +1,67 @@
 #include <iostream>
-#include <vector>
-
+#include <bits/stdc++.h>
 using namespace std;
 
-// Merge two sorted subarrays into one sorted array
-void merge(vector<int>& arr, int left, int middle, int right) {
-    int n1 = middle - left + 1;
-    int n2 = right - middle;
-
-    // Create temporary arrays
-    vector<int> leftArray(n1);
-    vector<int> rightArray(n2);
-
-    // Copy data to temporary arrays leftArray[] and rightArray[]
-    for (int i = 0; i < n1; i++) {
-        leftArray[i] = arr[left + i];
-    }
-    for (int j = 0; j < n2; j++) {
-        rightArray[j] = arr[middle + 1 + j];
-    }
-
-    // Merge the temporary arrays back into arr[left..right]
-    int i = 0, j = 0, k = left;
-    while (i < n1 && j < n2) {
-        if (leftArray[i] <= rightArray[j]) {
-            arr[k] = leftArray[i];
-            i++;
-        } else {
-            arr[k] = rightArray[j];
-            j++;
-        }
-        k++;
-    }
-
-    // Copy the remaining elements of leftArray[], if any
-    while (i < n1) {
-        arr[k] = leftArray[i];
-        i++;
-        k++;
-    }
-
-    // Copy the remaining elements of rightArray[], if any
-    while (j < n2) {
-        arr[k] = rightArray[j];
-        j++;
-        k++;
-    }
+void merge(vector<int> &arr,int l , int mid, int r){
+  
+	int n1 = mid-l+1;
+	int n2 = r-mid;
+	
+	vector<int> li(n1);
+	vector<int> ri(n2);
+	
+	for(int i=0; i<n1; i++){
+		li[i] = arr[l+i];
+	}
+	
+	for(int j=0; j<n2; j++){
+		ri[j] = arr[mid+j+1];
+	}
+	
+	int i = 0, j = 0, k = l;
+		
+	while(i<n1 and j<n2){
+		
+		if(li[i]<=ri[j]){
+			arr[k++] = li[i++];
+		}
+		else{
+			arr[k++] = ri[j++];
+		}
+	}
+		
+	while(i<n1){
+		arr[k++]= li[i++];
+	}
+	
+	while(j<n2){
+		arr[k++] = ri[j++];
+	}
+    
 }
 
-// Recursive merge sort function
-void mergeSort(vector<int>& arr, int left, int right) {
-    if (left < right) {
-        // Find the middle point
-        int middle = left + (right - left) / 2;
-
-        // Recursively sort the first and second halves
-        mergeSort(arr, left, middle);
-        mergeSort(arr, middle + 1, right);
-
-        // Merge the sorted halves
-        merge(arr, left, middle, right);
-    }
+void mergersort(vector<int> &arr, int  l , int r){
+      
+	if(l<r){
+	
+		int mid = l+(r-l)/2;
+		
+		mergersort(arr,l,mid);
+		mergersort(arr,mid+1,r);
+		
+		merge(arr,l,mid,r);
+	}
 }
 
-int main() {
-    vector<int> arr = {12, 11, 13, 5, 7, 6};
-
-    cout << "Original array: ";
-    for (int num : arr) {
-        cout << num << " ";
-    }
-    cout << endl;
-
-    mergeSort(arr, 0, arr.size() - 1);
-
-    cout << "Sorted array: ";
-    for (int num : arr) {
-        cout << num << " ";
-    }
-    cout << endl;
-
-    return 0;
+int main() 
+{
+	vector<int> ar = {8,7,6,4,5};
+	
+	mergersort(ar,0,ar.size()-1);
+	  
+	for(int i : ar){
+		cout<<i<<" ";
+	}
+	  
+	return 0;
 }
