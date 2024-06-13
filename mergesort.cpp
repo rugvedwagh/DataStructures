@@ -42,15 +42,17 @@ void merge(vector<int> &arr,int l , int mid, int r){
 
 void mergersort(vector<int> &arr, int  l , int r){
       
-	if(l<r){
-	
-		int mid = l+(r-l)/2;
-		
-		mergersort(arr,l,mid);
-		mergersort(arr,mid+1,r);
-		
-		merge(arr,l,mid,r);
+	if(l>=r){
+	  return;
 	}
+	
+	int mid = l+(r-l)/2;
+	
+	mergersort(arr,l,mid);
+	mergersort(arr,mid+1,r);
+	
+	merge(arr,l,mid,r);
+	
 }
 
 int main() 
