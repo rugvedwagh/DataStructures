@@ -1,70 +1,106 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <vector>
+#include <queue>
 using namespace std;
 
-class Graph
+class Solution
 {
-    int V;
-    vector<vector<int>> adj;
-
 public:
-    Graph(int V)
+    // Function to return list containing vertices in Topological order.
+    vector<int> topoSort(int V, vector<int> adj_list[])
     {
-        this->V = V;
-        this->adj = vector<vector<int>>(V);
-    }
+        // Initialize indegree array to count incoming edges for each vertex
+        vector<int> indegree(V, 0);
 
-    void addEdge(int v, int w)
-    {
-        adj[v].push_back(w);
-    }
-
-    void topologicalSortUtil(int v, vector<bool> &visited, stack<int> &Stack)
-    {
-        visited[v] = true;
-        for (const int &neighbor : adj[v])
-        {
-            if (!visited[neighbor])
-            {
-                topologicalSortUtil(neighbor, visited, Stack);
-            }
-        }
-        Stack.push(v);
-    }
-
-    void topologicalSort()
-    {
-        stack<int> Stack;
-        vector<bool> visited(V, false);
-
+        // Calculate indegrees for each vertex
         for (int i = 0; i < V; i++)
         {
-            if (!visited[i])
+            for (int j : adj_list[i])
             {
-                topologicalSortUtil(i, visited, Stack);
+                indegree[j]++;
             }
         }
 
-        cout << "Topological Sort: ";
-        while (!Stack.empty())
+        // Initialize a queue for BFS
+        queue<int> q;
+
+        // Add vertices with 0 indegree to the queue
+        for (int i = 0; i < V; i++)
         {
-            cout << Stack.top() << " ";
-            Stack.pop();
+            if (indegree[i] == 0)
+            {
+                q.push(i);
+            }
         }
+
+        // Initialize the result vector for the topological order
+        vector<int> result;
+
+        // Perform BFS
+        while (!q.empty())
+        {
+            int u = q.front();
+            q.pop();
+
+            // Add the vertex to the result
+            result.push_back(u);
+
+            // Decrease the indegree of adjacent vertices and enqueue them if indegree becomes 0
+            for (int v : adj_list[u])
+            {
+                indegree[v]--;
+                if (indegree[v] == 0)
+                {
+                    q.push(v);
+                }
+            }
+        }
+
+        return result;
     }
 };
 
 int main()
 {
-    Graph g(6);
-    g.addEdge(5, 2);
-    g.addEdge(5, 0);
-    g.addEdge(4, 0);
-    g.addEdge(4, 1);
-    g.addEdge(2, 3);
-    g.addEdge(3, 1);
 
-    cout << "Topological Sort: ";
-    g.topologicalSort();
+    int N = 6; // Number of vertices
+
+    vector<int> adj[N];
+    adj[5].push_back(0);
+    adj[5].push_back(2);
+    adj[4].push_back(0);
+    adj[4].push_back(1);
+    adj[2].push_back(3);
+    adj[3].push_back(1);
+
+    Solution obj;
+    vector<int> res = obj.topoSort(N, adj);
+
+    for (int vertex : res)
+    {
+        cout << vertex << " ";
+    }
+    cout << endl;
 
     return 0;
 }
+
+
+/*
+
+        5
+       / \
+      /   \
+     /     \
+    0 --- 2
+     \   /
+      \ /
+       4
+        \
+         \
+          1
+          ^
+          |
+          3
+*/
+          
