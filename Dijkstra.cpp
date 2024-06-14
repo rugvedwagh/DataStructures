@@ -1,66 +1,74 @@
-
 #include <iostream>
 #include <bits/stdc++.h>
-#include <limits>
-
 using namespace std;
 
-const int INF = numeric_limits<int>::max();
+vector<int> dijkstra(vector<vector<int>> &graph, int src, int V)
+{
+    vector<int> dist(V,INT_MAX);
+    vector<bool> visited(V,false);
+    
+    dist[src] = 0;
 
-void dijkstra(vector<vector<int>>& graph, int source) {
-    int V = graph.size();
-    vector<int> dist(V, INF);
-    vector<bool> visited(V, false);
+    for (int count = 0; count < V - 1; count++) {
+      
+        int min = INT_MAX, u;
 
-    dist[source] = 0;
-
-    int count = 0;
-    while (count < V - 1) {
-        int u;
-        int min = INT_MAX;
-        for (int i = 0; i < V; ++i) {
-            if (!visited[i] && (dist[i]<=min)) {
-                min = dist[i];
-                u = i;
+        for (int v = 0; v < V; v++){
+            if (!visited[v] && dist[v] <= min){
+                min = dist[v];
+                u = v;
             }
         }
-
+        
         visited[u] = true;
 
-        int v = 0;
-        while (v < V) {
-            if (!visited[v] && graph[u][v] && dist[u] != INF && dist[u] + graph[u][v] < dist[v]) {
+        for (int v = 0; v < V; v++){
+            
+            if (!visited[v] && graph[u][v] && dist[u] != INT_MAX && dist[u] + graph[u][v] < dist[v]){
                 dist[v] = dist[u] + graph[u][v];
             }
-            v++;
         }
-
-        count++;
     }
 
-    cout << "Shortest distances from vertex " << source << ":\n";
-    for (int i = 0; i < V; ++i) {
-        cout << "Vertex " << i << ": " << dist[i] << endl;
-    }
+    return dist;
 }
 
-int main() {
-    int V = 6; // Number of vertices
-    vector<vector<int>> graph(V, vector<int>(V, 0));
 
-    // Adding edges to the graph
-    graph[0][1] = 2;
-    graph[0][2] = 4;
-    graph[1][2] = 1;
-    graph[1][3] = 7;
-    graph[2][4] = 3;
-    graph[3][4] = 1;
-    graph[3][5] = 5;
-    graph[4][5] = 2;
-
-    int source = 0; // Source vertex
-
-    dijkstra(graph, source);
+int main()
+{
+  
+    int V = 6;
+    
+    vector<vector<int>> graph = {
+        {0, 2, 4, 0, 0, 0},
+        {2, 0, 1, 7, 0, 0},
+        {4, 1, 0, 0, 3, 0},
+        {0, 7, 0, 0, 1, 5},
+        {0, 0, 3, 1, 0, 2},
+        {0, 0, 0, 5, 2, 0}
+    };
+          
+    int source = 0;
+    vector<int> dist = dijkstra(graph, source, V);
+    
+    int count = 0;
+    for(auto i : dist){
+      cout<<"Smallest distance from vertex "<<source<<" to "<<count++<<" = "<<i<<endl;
+    }
 
     return 0;
 }
+
+
+/*
+OUTPUT
+
+Smallest distance from vertex 0 to 0 = 0
+Smallest distance from vertex 0 to 1 = 2
+Smallest distance from vertex 0 to 2 = 3
+Smallest distance from vertex 0 to 3 = 7
+Smallest distance from vertex 0 to 4 = 6
+Smallest distance from vertex 0 to 5 = 8
+
+
+*/
