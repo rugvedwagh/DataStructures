@@ -2,7 +2,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-vector<int> dijkstra(vector<vector<int>> &graph, int src, int V)
+vector<int> Dijkstra(vector<vector<int>> &graph, int src, int V)
 {
     vector<int> dist(V,INT_MAX);
     vector<bool> visited(V,false);
@@ -49,7 +49,7 @@ int main()
     };
           
     int source = 0;
-    vector<int> dist = dijkstra(graph, source, V);
+    vector<int> dist = Dijkstra(graph, source, V);
     
     int count = 0;
     for(auto i : dist){
