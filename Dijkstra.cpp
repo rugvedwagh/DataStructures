@@ -70,5 +70,23 @@ Smallest distance from vertex 0 to 3 = 7
 Smallest distance from vertex 0 to 4 = 6
 Smallest distance from vertex 0 to 5 = 8
 
+***** NOTES *****
+
+In Dijkstra's algorithm, the source node doesn't need to be
+explicitly marked as visited initially because its shortest 
+distance is set to zero, which inherently handles its inclusion
+in the shortest path tree (SPT) during the first iteration of 
+the algorithm. 
+
+The first 'u' is actually the source node only
+
+In Dijkstra's algorithm, the outer loop runs from 0 to V-1 for the following reasons:
+
+Number of Vertices to Process: The algorithm is designed to process each vertex
+exactly once, except the starting vertex which is considered already processed
+
+. Since the graph has V vertices, and the starting vertex is processed separately
+by initializing its distance to zero, the algorithm needs to iterate V-1 times to 
+process the remaining V-1 vertices.
 
 */
