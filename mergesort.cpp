@@ -40,7 +40,7 @@ void merge(vector<int> &arr,int l , int mid, int r){
     
 }
 
-void mergersort(vector<int> &arr, int  l , int r){
+void mergesort(vector<int> &arr, int  l , int r){
       
 	if(l>=r){
 	  return;
@@ -48,8 +48,8 @@ void mergersort(vector<int> &arr, int  l , int r){
 	
 	int mid = l+(r-l)/2;
 	
-	mergersort(arr,l,mid);
-	mergersort(arr,mid+1,r);
+	mergesort(arr,l,mid);
+	mergesort(arr,mid+1,r);
 	
 	merge(arr,l,mid,r);
 	
@@ -59,7 +59,7 @@ int main()
 {
 	vector<int> ar = {8,7,6,4,5};
 	
-	mergersort(ar,0,ar.size()-1);
+	mergesort(ar,0,ar.size()-1);
 	  
 	for(int i : ar){
 		cout<<i<<" ";
@@ -67,3 +67,11 @@ int main()
 	  
 	return 0;
 }
+
+
+/*
+
+Time Complexity - O(n log n)
+Space Complexity - O(n)
+
+*/
