@@ -1,9 +1,6 @@
 class NumArray
 {
 public:
-    vector<int> v, tree;
-    int n;
-
     void build(int s, int e, int x)
     {
         if (s == e)
@@ -18,14 +15,6 @@ public:
         build(mid + 1, e, 2 * x + 2);
 
         tree[x] = tree[2 * x + 1] + tree[2 * x + 2];
-    }
-
-    NumArray(vector<int> &nums)
-    {
-        n = nums.size();
-        tree.resize(n * 4, 0);
-        v = nums;
-        build(0, n - 1, 0);
     }
 
     void update(int s, int e, int x, int index, int val)
