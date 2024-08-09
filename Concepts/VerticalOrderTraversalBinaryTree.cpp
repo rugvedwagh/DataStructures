@@ -17,14 +17,7 @@ public:
 
     static bool comp(pair<int, int> &a, pair<int, int> &b)
     {
-        if (a.second == b.second)
-        {
-            return a.first < b.first;
-        }
-        else
-        {
-            return a.second < b.second;
-        }
+        return (a.second == b.second) ? a.first < b.first : a.second < b.second;
     }
 
     vector<vector<int>> verticalTraversal(TreeNode *root)
