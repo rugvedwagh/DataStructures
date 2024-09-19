@@ -57,7 +57,7 @@ public:
 
     void deleteNode(int value) {
         Node* current = head;
-        while (current && current->data != value) {
+        while (current and current->data != value) {
             current = current->next;
         }
 
