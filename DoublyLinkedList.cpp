@@ -8,9 +8,9 @@ public:
     Node* prev;
 
     Node(int value) {
-        data = value;
-        next = nullptr;
-        prev = nullptr;
+        this->data = value;
+        this->next = nullptr;
+        this->prev = nullptr;
     }
 };
 
@@ -21,8 +21,8 @@ private:
 
 public:
     DoublyLinkedList() {
-        head = nullptr;
-        tail = nullptr;
+        this->head = nullptr;
+        this->tail = nullptr;
     }
 
     void append(int value) {
