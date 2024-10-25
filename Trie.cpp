@@ -1,11 +1,3 @@
-
-/**
- * Your Trie object will be instantiated and called as such:
- * Trie* obj = new Trie();
- * obj->insert(word);
- * bool param_2 = obj->search(word);
- * bool param_3 = obj->startsWith(prefix);
- */
 class Node {
 public:
     Node* child[26];
@@ -63,5 +55,35 @@ public:
         }
 
         return true;
+    }
+
+    bool deleteHelper(Node* node, const string& word, int depth) {
+        if (!node) return false;
+
+        if (depth == word.size()) {
+            if (!node->end) return false;
+
+            node->end = false;
+
+            for (int i = 0; i < 26; i++) {
+                if (node->child[i]) return false;
+            }
+
+            return true;
+        }
+
+        int index = word[depth] - 'a';
+        if (deleteHelper(node->child[index], word, depth + 1)) {
+            delete node->child[index];
+            node->child[index] = NULL;
+
+            return !node->end && all_of(begin(node->child), end(node->child), [](Node* n) { return n == NULL; });
+        }
+
+        return false;
+    }
+
+    void deleteWord(const string& word) {
+        deleteHelper(root, word, 0);
     }
 };
