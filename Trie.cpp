@@ -1,89 +1,118 @@
-class Node {
+class TrieNode
+{
 public:
-    Node* child[26];
-    bool end;
-
-    Node() {
-        this->end = false;
-        for (int i = 0; i < 26; i++) {
-            child[i] = NULL;
+    TrieNode *children[26]; // Assuming lowercase English alphabet
+    bool isEndOfWord;
+    TrieNode()
+    {
+        for (int i = 0; i < 26; i++)
+        {
+            children[i] = nullptr;
         }
+        isEndOfWord = false;
     }
 };
 
-class Trie {
-private:
-    Node* root;
-
+class Trie
+{
 public:
-    Trie() { 
-        root = new Node(); 
+    TrieNode *root;
+    Trie()
+    {
+        root = new TrieNode();
     }
 
-    void insert(string word) {
-        Node* temp = root;
-
-        for (auto i : word) {
-            if (temp->child[i - 'a'] == NULL) {
-                temp->child[i - 'a'] = new Node();
+    void insert(string word)
+    {
+        TrieNode *current = root;
+        for (char ch : word)
+        {
+            int index = ch - 'a';
+            if (!current->children[index])
+            {
+                current->children[index] = new TrieNode();
             }
-            temp = temp->child[i - 'a'];
+            current = current->children[index];
         }
-        temp->end = true;
+        current->isEndOfWord = true;
     }
 
-    bool search(string word) {
-        Node* temp = root;
-
-        for (auto i : word) {
-            if (temp->child[i - 'a'] == NULL) {
+    bool search(TrieNode *root, string word)
+    {
+        TrieNode *current = root;
+        for (char ch : word)
+        {
+            int index = ch - 'a';
+            if (!current->children[index])
+            {
                 return false;
             }
-            temp = temp->child[i - 'a'];
+            current = current->children[index];
         }
-
-        return temp->end;
+        return current->isEndOfWord;
     }
 
-    bool startsWith(string prefix) {
-        Node* temp = root;
-        for (auto i : prefix) {
-            if (temp->child[i - 'a'] == NULL) {
-                return false;
+    void findAllWordsWithPrefix(TrieNode *root, string prefix, vector<string> &result)
+    {
+        TrieNode *current = root;
+        for (char ch : prefix)
+        {
+            int index = ch - 'a';
+            if (!current->children[index])
+            {
+                return; // Prefix not found
             }
-            temp = temp->child[i - 'a'];
+            current = current->children[index];
         }
-
-        return true;
+        // Perform a depth-first search to collect words under this node.
+        findAllWordsFromNode(current, prefix, result);
     }
 
-    bool deleteHelper(Node* node, const string& word, int depth) {
-        if (!node) return false;
-
-        if (depth == word.size()) {
-            if (!node->end) return false;
-
-            node->end = false;
-
-            for (int i = 0; i < 26; i++) {
-                if (node->child[i]) return false;
+    void findAllWordsFromNode(TrieNode *node, string currentWord, vector<string> &result)
+    {
+        if (node->isEndOfWord)
+        {
+            result.push_back(currentWord);
+        }
+        for (int i = 0; i < 26; i++)
+        {
+            if (node->children[i])
+            {
+                char ch = 'a' + i;
+                findAllWordsFromNode(node->children[i], currentWord + ch, result);
             }
-
-            return true;
         }
+    }
 
-        int index = word[depth] - 'a';
-        if (deleteHelper(node->child[index], word, depth + 1)) {
-            delete node->child[index];
-            node->child[index] = NULL;
-
-            return !node->end && all_of(begin(node->child), end(node->child), [](Node* n) { return n == NULL; });
+    bool deleteWord(TrieNode *root, string word, int index)
+    {
+        if (index == word.length())
+        {
+            if (!root->isEndOfWord)
+                return false; // Word doesn't exist
+            root->isEndOfWord = false;
+            return isEmptyNode(root);
         }
-
+        int chIndex = word[index] - 'a';
+        if (!root->children[chIndex])
+            return false; // Word doesn't exist
+        bool canDelete = deleteWord(root->children[chIndex], word, index + 1);
+        if (canDelete)
+        {
+            delete root->children[chIndex];
+            root->children[chIndex] = nullptr;
+            return isEmptyNode(root);
+        }
         return false;
     }
 
-    void deleteWord(const string& word) {
-        deleteHelper(root, word, 0);
+    bool isEmptyNode(TrieNode *node)
+    {
+        for (int i = 0; i < 26; i++)
+        {
+            if (node->children[i])
+                return false;
+        }
+        return true;
     }
 };
