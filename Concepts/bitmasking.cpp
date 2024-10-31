@@ -111,3 +111,8 @@ After OR: 00000000000000000000000010000101
 The final value of masks[i] will be 00000000000000000000000010000101, which represents that the word contains the letters 'a', 'c', and 't'.
 
 */
+\*
+    int result = a | b;  // result = 7 (binary 0111)
+    // To recover 'a', do the following
+    int recovered_a = result & ~b;  //
+*/
