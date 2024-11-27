@@ -9,5 +9,6 @@ bool isSub(string a, string b) {
             ai++;
         }
     }
+
     return bi == b.size();
 }
