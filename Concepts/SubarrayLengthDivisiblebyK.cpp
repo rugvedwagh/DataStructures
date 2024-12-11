@@ -26,10 +26,10 @@ public:
 };
 
 /*
-In an array if we find two indexes which on dividing by an integer 'k', give the same remainder then,
-the distance between those two indexs is completely divisible by (k)."
-
-Suppose for eg, i%k == 1 and j%k == 1, then this implies that (j-i) % k == 0.
-
-https://leetcode.com/problems/maximum-subarray-sum-with-length-divisible-by-k/
+        In an array if we find two indexes which on dividing by an integer 'k', give the same remainder then,
+        the distance between those two indexs is completely divisible by (k)."
+        
+        Suppose for eg, i%k == 1 and j%k == 1, then this implies that (j-i) % k == 0.
+        
+        https://leetcode.com/problems/maximum-subarray-sum-with-length-divisible-by-k/
 */
