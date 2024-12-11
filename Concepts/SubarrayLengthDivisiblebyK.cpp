@@ -26,7 +26,7 @@ public:
 };
 
 /*
-In an array if we find two indexes which on divided by an integer (k), give the same remainder then,
+In an array if we find two indexes which on dividing by an integer 'k', give the same remainder then,
 the distance between those two indexs is completely divisible by (k)."
 
 Suppose for eg, i%k == 1 and j%k == 1, then this implies that (j-i) % k == 0.
